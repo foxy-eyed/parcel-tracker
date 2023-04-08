@@ -1,0 +1,34 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "bin/**"
+    - "db/**"
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Metrics/BlockLength:
+  Exclude: []
+
+Metrics/MethodLength:
+  CountAsOne: ["array", "heredoc"]
+  Max: 15
+
+Naming/MethodParameterName:
+  MinNameLength: 2
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
