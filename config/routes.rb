@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount RailsEventStore::Browser => "/res" if Rails.env.development?
+
   resources :packages, only: %i[index show create] do
     resources :notifications, only: %i[index create], controller: :subscriptions, shallow: true
   end

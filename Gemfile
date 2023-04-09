@@ -23,6 +23,8 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+gem "rails_event_store", "~> 2.9.1"
+
 group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "rubocop", require: false
