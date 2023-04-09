@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NotificationsController < ApplicationController
+class SubscriptionsController < ApplicationController
   def show; end
 
   def create; end

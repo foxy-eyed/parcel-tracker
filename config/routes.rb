@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   resources :packages, only: %i[index show create] do
-    resources :notifications, only: %i[index create], shallow: true
+    resources :notifications, only: %i[index create], controller: :subscriptions, shallow: true
   end
 
   post "webhooks/:provider/arrived/:track", to: "webhooks#arrived"
