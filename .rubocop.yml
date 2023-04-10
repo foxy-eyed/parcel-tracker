@@ -21,6 +21,9 @@ Metrics/MethodLength:
 Naming/MethodParameterName:
   MinNameLength: 2
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
