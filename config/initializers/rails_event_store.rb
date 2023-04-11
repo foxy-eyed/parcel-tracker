@@ -14,8 +14,13 @@ Rails.configuration.to_prepare do
 
   # Subscribe event handlers below
   Rails.configuration.event_store.tap do |store|
-    store.subscribe(Package::TrackingInitiatedHandler, to: [Package::TrackingInitiated])
-
+    store.subscribe(Package::InitTracking, to: [Package::TrackingInitiated])
+    store.subscribe(Package::UpdateReadModel, to: [FastDelivery::ReceivedAtTransitLocation,
+                                                   FastDelivery::DispatchedFromTransitLocation,
+                                                   HappyPackage::ReceivedAtTransitLocation,
+                                                   HappyPackage::DispatchedFromTransitLocation,
+                                                   Package::DeliveryAttemptFailed,
+                                                   Package::DeliveredToRecipient])
     store.subscribe_to_all_events(RailsEventStore::LinkByEventType.new)
     store.subscribe_to_all_events(RailsEventStore::LinkByCorrelationId.new)
     store.subscribe_to_all_events(RailsEventStore::LinkByCausationId.new)

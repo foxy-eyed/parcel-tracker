@@ -5,7 +5,7 @@ class CreatePackages < ActiveRecord::Migration[7.0]
     create_table :packages, id: :uuid do |t|
       t.string :track, null: false, index: true, unique: true
       t.string :status, null: false, default: "created"
-      t.string :current_location
+      t.string :location
       t.jsonb :properties, null: false, default: {}
 
       t.timestamps

@@ -41,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_171412) do
   create_table "packages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "track", null: false
     t.string "status", default: "created", null: false
-    t.string "current_location"
+    t.string "location"
     t.jsonb "properties", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

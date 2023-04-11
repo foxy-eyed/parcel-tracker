@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Package::TrackingInitiatedHandler < ApplicationJob
+class Package::InitTracking < ApplicationJob
   prepend RailsEventStore::AsyncHandler
 
   def perform(event)

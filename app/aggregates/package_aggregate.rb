@@ -43,14 +43,10 @@ class PackageAggregate
     raise HasBeenDelivered if @status == :delivered
 
     case params
-    in { provider: "fast_delivery", state: "successful" }
-      apply FastDelivery::DeliveredToRecipient.new(data: { package_id: @id, params: params })
-    in { provider: "fast_delivery", state: "failed" }
-      apply FastDelivery::DeliveryAttemptFailed.new(data: { package_id: @id, params: params })
-    in { provider: "happy_package", success: true }
-      apply HappyPackage::DeliveredToRecipient.new(data: { package_id: @id, params: params })
-    in { provider: "happy_package", success: false }
-      apply HappyPackage::DeliveryAttemptFailed.new(data: { package_id: @id, params: params })
+    in { provider: "fast_delivery", state: "successful" } | { provider: "happy_package", success: true }
+      apply Package::DeliveredToRecipient.new(data: { package_id: @id, params: params })
+    in { provider: "fast_delivery", state: "failed" } | { provider: "happy_package", success: false }
+      apply Package::DeliveryAttemptFailed.new(data: { package_id: @id, params: params })
     end
   end
 
@@ -60,29 +56,29 @@ class PackageAggregate
 
   on FastDelivery::ReceivedAtTransitLocation do |event|
     @status = :at_transit_office
-    @location = event.data.dig(:params, :location)
+    @location = event.data.dig(:params, :location, :name)
   end
 
   on HappyPackage::ReceivedAtTransitLocation do |event|
     @status = :at_transit_office
-    @location = event.data.dig(:params, :location, :name)
+    @location = event.data.dig(:params, :location)
   end
 
   on FastDelivery::DispatchedFromTransitLocation do |event|
     @status = :on_the_way
-    @location = event.data.dig(:params, :location)
+    @location = event.data.dig(:params, :location, :name)
   end
 
   on HappyPackage::DispatchedFromTransitLocation do |event|
     @status = :on_the_way
-    @location = event.data.dig(:params, :location, :name)
+    @location = event.data.dig(:params, :location)
   end
 
-  on FastDelivery::DeliveryAttemptFailed, HappyPackage::DeliveryAttemptFailed do |_event|
+  on Package::DeliveryAttemptFailed do |_event|
     @status = :unsuccessful_delivery
   end
 
-  on FastDelivery::DeliveredToRecipient, HappyPackage::DeliveredToRecipient do |_event|
+  on Package::DeliveredToRecipient do |_event|
     @status = :delivered
     @location = nil
   end
