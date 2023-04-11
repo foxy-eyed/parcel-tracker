@@ -11,6 +11,9 @@ Layout/SpaceInLambdaLiteral:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
+Metrics/AbcSize:
+  Enabled: false
+
 Metrics/BlockLength:
   Exclude: []
 

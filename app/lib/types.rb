@@ -3,6 +3,8 @@
 module Types
   include Dry.Types()
 
+  PROVIDERS = %w[fast_delivery happy_package].freeze
+
   PROVIDER_TRACK_FORMATS = {
     fast_delivery: /\AFD\d{1,10}\z/,
     happy_package: /\AHP\d{1,10}\z/
@@ -14,4 +16,5 @@ module Types
   FastDeliveryTrack = Params::String.constrained(format: PROVIDER_TRACK_FORMATS[:fast_delivery])
   HappyPackageTrack = Params::String.constrained(format: PROVIDER_TRACK_FORMATS[:happy_package])
   TrackNumber = FastDeliveryTrack | HappyPackageTrack
+  Provider = Params::String.constrained(included_in: PROVIDERS)
 end

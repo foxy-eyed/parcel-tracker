@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :notifications, only: %i[index create], controller: :subscriptions, shallow: true
   end
 
-  post "webhooks/:provider/arrived/:track", to: "webhooks#arrived"
-  post "webhooks/:provider/departed/:track", to: "webhooks#dispatched"
-  post "webhooks/:provider/deliver-attempt/:track", to: "webhooks#delivery_attempted"
+  post "webhook/:provider/arrived/:track", to: "webhooks#arrived"
+  post "webhook/:provider/departed/:track", to: "webhooks#dispatched"
+  post "webhook/:provider/deliver-attempt/:track", to: "webhooks#delivery_attempted"
 end

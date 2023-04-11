@@ -18,7 +18,9 @@ class PackagesController < ApplicationController
       unless package
         Package.transaction do
           package = Package.create!(track: result[:track])
-          PackageRepository.new.with_package(package.id, &:initiate_tracking)
+          PackageRepository.new.with_package(package.id) do |package_agg|
+            package_agg.initiate_tracking(track: result[:track])
+          end
         end
       end
       render json: package
