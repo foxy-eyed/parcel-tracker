@@ -21,6 +21,12 @@ Rails.configuration.to_prepare do
                                                    HappyPackage::DispatchedFromTransitLocation,
                                                    Package::DeliveryAttemptFailed,
                                                    Package::DeliveredToRecipient])
+    store.subscribe(Package::NotifySubscribers, to: [FastDelivery::ReceivedAtTransitLocation,
+                                                     FastDelivery::DispatchedFromTransitLocation,
+                                                     HappyPackage::ReceivedAtTransitLocation,
+                                                     HappyPackage::DispatchedFromTransitLocation,
+                                                     Package::DeliveryAttemptFailed,
+                                                     Package::DeliveredToRecipient])
     store.subscribe_to_all_events(RailsEventStore::LinkByEventType.new)
     store.subscribe_to_all_events(RailsEventStore::LinkByCorrelationId.new)
     store.subscribe_to_all_events(RailsEventStore::LinkByCausationId.new)
