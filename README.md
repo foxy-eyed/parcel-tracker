@@ -2,25 +2,25 @@
 
 ## Setup
 0. Clone the repo:
-```
-$ git clone git@github.com:foxy-eyed/parcel-tracker.git
-```
+    ```
+    $ git clone git@github.com:foxy-eyed/parcel-tracker.git
+    ```
 1. In project root:
-```
-$ docker compose build
-```
+    ```
+    $ docker compose build
+    ```
 2. Create database, run migrations and seed data:
-```
-$ docker compose run app rails db:prepare
-$ docker compose run app rails db:seed
-```
-With seeds you will be able to use CURL examples below without any modifications.
+    ```
+    $ docker compose run app rails db:prepare
+    $ docker compose run app rails db:seed
+    ```
+    With seeds you will be able to use CURL examples below without any modifications.
 
 3. Finally
-```
-$ docker compose run
-```
-Now you have app running at http://localhost:9292 and ready to process your requests.
+    ```
+    $ docker compose up
+    ```
+    Now you have app running at http://localhost:9292 and ready to process your requests.
 
 ## API
 
