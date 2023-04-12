@@ -8,7 +8,12 @@ class PackagesController < ApplicationController
 
   def show
     package = Package.find(params[:id])
-    render json: package
+    events = PackageRepository.new.package_events(package.id)
+    render json: {
+      id: package.id,
+      track: package.track,
+      events: events.map { |e| { id: e.event_id, type: e.class.name, data: e.data } }
+    }
   end
 
   def create
