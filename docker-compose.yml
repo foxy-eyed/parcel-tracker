@@ -1,0 +1,42 @@
+version: '3'
+
+x-env: &base_env
+  - DATABASE_URL=postgres://user:pa$$@db:5432/parcel_tracker_development
+  - BUNDLE_JOBS=4
+  - BUNDLE_PATH=vendor/bundle
+  - BUNDLE_FORGET_CLI_OPTIONS=true
+  - REDIS_URL=redis://redis:6379/1
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=parcel_tracker_development
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pa$$
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build: .
+    command: bash -c "bundle exec sidekiq"
+    environment: *base_env
+    depends_on:
+      - redis
+    volumes:
+      - .:/usr/src/app
+
+  app:
+    build: .
+    command: bash -c "bundle exec rails s -b 0.0.0.0 -p 9292"
+    environment: *base_env
+    depends_on:
+      - db
+      - sidekiq
+    ports:
+      - "9292:9292"
+    volumes:
+      - .:/usr/src/app
